@@ -127,16 +127,46 @@ $isMonitoring = $true
 Write-Host "`n🛡️  Surveillance en cours... (Appuyez sur Ctrl+C pour arrêter)`n" -ForegroundColor Green
 
 try {
+    # Vérification initiale du tunnel WireGuard
+    Write-Host "Vérification du tunnel WireGuard..." -ForegroundColor Yellow
+    $wgInterface = Get-NetAdapter -ErrorAction SilentlyContinue | Where-Object { 
+        ($_.InterfaceDescription -like "*WireGuard*" -or $_.Name -like "*$TunnelName*") -and 
+        $_.Status -eq 'Up'
+    }
+    
+    if (-not $wgInterface) {
+        Write-Host "`n╔════════════════════════════════════════════════════════════════════════════╗" -ForegroundColor Red
+        Write-Host "║                          ❌ ERREUR DE DÉMARRAGE                            ║" -ForegroundColor Red
+        Write-Host "╚════════════════════════════════════════════════════════════════════════════╝`n" -ForegroundColor Red
+        
+        Write-Host "⚠️  Le tunnel WireGuard '$TunnelName' n'est PAS actif !`n" -ForegroundColor Yellow
+        
+        Write-Host "📋 Vérifications nécessaires :" -ForegroundColor Cyan
+        Write-Host "   1. Ouvrez WireGuard" -ForegroundColor White
+        Write-Host "   2. Activez le tunnel '$TunnelName'" -ForegroundColor White
+        Write-Host "   3. Relancez ce script`n" -ForegroundColor White
+        
+        Write-Host "💡 Astuce : Utilisez 'lancer_wireguard_protege.ps1' pour tout démarrer automatiquement`n" -ForegroundColor Gray
+        
+        Write-Log "❌ Démarrage impossible - Tunnel WireGuard non actif" "ERROR"
+        
+        Write-Host "Appuyez sur une touche pour fermer..." -ForegroundColor Gray
+        $null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
+        exit 1
+    }
+    
+    Write-Host "✅ Tunnel WireGuard détecté : $($wgInterface.Name)`n" -ForegroundColor Green
+    
     while ($isMonitoring) {
-        # Vérifier si le tunnel WireGuard est actif
+        # Vérifier si le tunnel WireGuard est toujours actif
         $wgInterface = Get-NetAdapter -ErrorAction SilentlyContinue | Where-Object { 
             ($_.InterfaceDescription -like "*WireGuard*" -or $_.Name -like "*$TunnelName*") -and 
             $_.Status -eq 'Up'
         }
         
         if (-not $wgInterface) {
-            Write-Log "ℹ️  Tunnel WireGuard non actif - Arrêt de la surveillance" "INFO"
-            Write-Host "`n⚠️  Le tunnel WireGuard n'est pas actif. Surveillance arrêtée." -ForegroundColor Yellow
+            Write-Log "ℹ️  Tunnel WireGuard désactivé - Arrêt de la surveillance" "INFO"
+            Write-Host "`n⚠️  Le tunnel WireGuard a été désactivé. Surveillance arrêtée." -ForegroundColor Yellow
             Write-Host "Réactivez le tunnel pour relancer la surveillance.`n" -ForegroundColor Gray
             break
         }
