@@ -8,6 +8,36 @@ Garantit que le flux vidéo Shadow ne passe **JAMAIS** par le tunnel VPN, tout e
 [![Platform: Windows](https://img.shields.io/badge/Platform-Windows%2010%2F11-blue.svg)](https://www.microsoft.com/windows)
 [![PowerShell: 5.1+](https://img.shields.io/badge/PowerShell-5.1%2B-blue.svg)](https://docs.microsoft.com/powershell/)
 
+## ✨ Nouveau : Premium Edition (Recommandé)
+
+**Interface graphique moderne** pour une utilisation ultra-simplifiée !
+
+### 🎨 Fonctionnalités Premium
+
+- **Interface graphique élégante** avec thème sombre professionnel
+- **Surveillance en temps réel** : Tunnel, Shadow, IP publique, Gardien
+- **Activation en 1 clic** - Aucune ligne de commande
+- **Indicateurs visuels** colorés (🟢 actif, ⚫ inactif)
+- **Mise à jour automatique** toutes les 2 secondes
+- **Design moderne** avec police Segoe UI
+
+### 🚀 Utilisation Premium
+
+```powershell
+# Clonez le projet
+git clone https://github.com/Stazya/wireguard-shadow-split-tunnel.git
+cd wireguard-shadow-split-tunnel
+
+# Double-cliquez sur :
+ShadowVPN_Premium.bat
+```
+
+**C'est tout !** Une fenêtre moderne s'ouvre avec tous les contrôles.
+
+![Premium Interface](https://img.shields.io/badge/Interface-Graphique-blue?style=for-the-badge)
+
+---
+
 ## 🎯 Problème Résolu
 
 Lorsque vous activez un tunnel VPN WireGuard **à l'intérieur** d'une machine Shadow PC, le flux vidéo Shadow lui-même peut être capturé par le tunnel, causant des coupures instantanées ou une latence insupportable.
@@ -46,15 +76,20 @@ Online.net         : 212.129.0.0/18, 62.210.0.0/16
 
 ```text
 wireguard-shadow-split-tunnel/
+├── ShadowVPN_Premium.ps1               # ✨ Interface graphique Premium
+├── ShadowVPN_Premium.bat               # ✨ Lanceur Premium (recommandé)
 ├── config_wireguard_template.conf      # Configuration WireGuard (template)
 ├── wireguard_postup.ps1                # Script d'activation automatique
 ├── wireguard_predown.ps1               # Script de désactivation automatique
-├── shadow_guardian.ps1                 # 🆕 Gardien automatique (surveillance)
-├── lancer_wireguard_protege.ps1        # 🆕 Lanceur tout-en-un
+├── shadow_guardian.ps1                 # Gardien automatique (surveillance)
+├── lancer_wireguard_protege.ps1        # Lanceur tout-en-un (CLI)
+├── lancer_wireguard_complet.bat        # Lanceur complet (CLI)
+├── lancer_guardian.bat                 # Lanceur gardien seul (CLI)
 ├── diagnostic_complet.ps1              # Vérification complète de la config
 ├── desactiver_urgence_wireguard.ps1    # Désactivation d'urgence
 ├── test_routes_manuel.ps1              # Test manuel des routes
 ├── verifier_routes_shadow.ps1          # Vérification rapide des routes
+├── install.ps1                         # Installation automatique
 ├── README.md                           # Ce fichier
 └── GUIDE_INSTALLATION.md               # Guide détaillé (français)
 ```
