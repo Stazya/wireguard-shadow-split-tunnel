@@ -83,6 +83,7 @@ $shadowDatacenters = @(
     # OVH Paris
     @{Range = "185.161.108.0"; Mask = "255.255.252.0"; CIDR = "/22"; Name = "OVH Paris" },
     @{Range = "195.154.0.0"; Mask = "255.255.0.0"; CIDR = "/16"; Name = "OVH France" },
+    @{Range = "185.25.0.0"; Mask = "255.255.0.0"; CIDR = "/16"; Name = "Shadow EU" },
     
     # Scaleway Paris
     @{Range = "51.15.0.0"; Mask = "255.255.0.0"; CIDR = "/16"; Name = "Scaleway Paris" },
