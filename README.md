@@ -44,17 +44,19 @@ Online.net         : 212.129.0.0/18, 62.210.0.0/16
 
 ## 📦 Contenu du Projet
 
-```
+```text
 wireguard-shadow-split-tunnel/
-├── config_wireguard_template.conf    # Configuration WireGuard (template)
-├── wireguard_postup.ps1              # Script d'activation automatique
-├── wireguard_predown.ps1             # Script de désactivation automatique
-├── diagnostic_complet.ps1            # Vérification complète de la config
-├── desactiver_urgence_wireguard.ps1  # Désactivation d'urgence
-├── test_routes_manuel.ps1            # Test manuel des routes
-├── verifier_routes_shadow.ps1        # Vérification rapide des routes
-├── README.md                         # Ce fichier
-└── GUIDE_INSTALLATION.md             # Guide détaillé (français)
+├── config_wireguard_template.conf      # Configuration WireGuard (template)
+├── wireguard_postup.ps1                # Script d'activation automatique
+├── wireguard_predown.ps1               # Script de désactivation automatique
+├── shadow_guardian.ps1                 # 🆕 Gardien automatique (surveillance)
+├── lancer_wireguard_protege.ps1        # 🆕 Lanceur tout-en-un
+├── diagnostic_complet.ps1              # Vérification complète de la config
+├── desactiver_urgence_wireguard.ps1    # Désactivation d'urgence
+├── test_routes_manuel.ps1              # Test manuel des routes
+├── verifier_routes_shadow.ps1          # Vérification rapide des routes
+├── README.md                           # Ce fichier
+└── GUIDE_INSTALLATION.md               # Guide détaillé (français)
 ```
 
 ## 🚀 Installation Rapide
@@ -109,6 +111,45 @@ PreDown = powershell -ExecutionPolicy Bypass -File "C:\CHEMIN\VERS\wireguard_pre
 2. "Créer un raccourci"
 3. Placez le raccourci sur le bureau
 4. Renommez-le "🚨 STOP VPN"
+
+## 🆕 Protection Automatique (Nouveau !)
+
+### Gardien Shadow - Surveillance Automatique
+
+Le **Shadow Guardian** surveille en continu votre connexion Shadow. Si le flux vidéo se coupe pendant plus de **10 secondes**, le tunnel WireGuard est **automatiquement désactivé** pour restaurer votre connexion.
+
+#### Utilisation Rapide
+
+**Méthode 1 : Lanceur Automatique** (Recommandé)
+
+```powershell
+# Double-cliquez sur ce fichier pour tout démarrer
+.\lancer_wireguard_protege.ps1
+```
+
+Ce script va :
+
+- ✅ Vérifier que Shadow est connecté
+- ✅ Activer le tunnel WireGuard
+- ✅ Lancer le gardien en arrière-plan
+- ✅ Vous protéger automatiquement
+
+**Méthode 2 : Manuel**
+
+```powershell
+# Activez d'abord le tunnel WireGuard, puis :
+.\shadow_guardian.ps1
+```
+
+#### Fonctionnement
+
+- 🔍 Vérification toutes les **2 secondes**
+- ⏱️ Seuil de déclenchement : **5 échecs** (10 secondes)
+- 🚨 Désactivation automatique du tunnel
+- 📢 Notification Windows
+- 📊 Logs détaillés
+
+
 
 ## 🎮 Utilisation
 
@@ -198,6 +239,8 @@ Get-Content wireguard_routing.log -Tail 50
 
 | Script | Description |
 |--------|-------------|
+| `lancer_wireguard_protege.ps1` | 🆕 Lanceur tout-en-un (tunnel + gardien) |
+| `shadow_guardian.ps1` | 🆕 Gardien automatique (surveillance 24/7) |
 | `diagnostic_complet.ps1` | Vérification complète (8 tests) |
 | `verifier_routes_shadow.ps1` | Vérification rapide des routes |
 | `test_routes_manuel.ps1` | Test manuel avant activation |
