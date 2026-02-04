@@ -78,26 +78,80 @@ catch {
 
 Write-Log "Exclusion des plages IP des datacenters Shadow..." "INFO"
 
-# Plages IP complètes des datacenters Shadow (OVH, Scaleway, etc.)
+# Plages IP complètes des datacenters Shadow en Europe
+# Mise à jour : Février 2024 - Toutes les plages connues
 $shadowDatacenters = @(
-    # OVH Paris
-    @{Range = "185.161.108.0"; Mask = "255.255.252.0"; CIDR = "/22"; Name = "OVH Paris" },
+    # ═══════════════════════════════════════════════════════════════
+    # SHADOW DATACENTERS - FRANCE
+    # ═══════════════════════════════════════════════════════════════
+    
+    # OVH Paris/France
+    @{Range = "185.161.108.0"; Mask = "255.255.252.0"; CIDR = "/22"; Name = "OVH Paris DC" },
     @{Range = "195.154.0.0"; Mask = "255.255.0.0"; CIDR = "/16"; Name = "OVH France" },
-    @{Range = "185.25.0.0"; Mask = "255.255.0.0"; CIDR = "/16"; Name = "Shadow EU" },
-    
-    # Scaleway Paris
-    @{Range = "51.15.0.0"; Mask = "255.255.0.0"; CIDR = "/16"; Name = "Scaleway Paris" },
-    @{Range = "51.158.0.0"; Mask = "255.254.0.0"; CIDR = "/15"; Name = "Scaleway Paris 2" },
-    @{Range = "163.172.0.0"; Mask = "255.255.0.0"; CIDR = "/16"; Name = "Scaleway Amsterdam" },
-    
-    # Online.net
-    @{Range = "212.129.0.0"; Mask = "255.255.192.0"; CIDR = "/18"; Name = "Online.net" },
-    @{Range = "62.210.0.0"; Mask = "255.255.0.0"; CIDR = "/16"; Name = "Online.net 2" },
-    
-    # OVH Global
+    @{Range = "185.25.0.0"; Mask = "255.255.0.0"; CIDR = "/16"; Name = "Shadow EU Primary" },
     @{Range = "37.187.0.0"; Mask = "255.255.0.0"; CIDR = "/16"; Name = "OVH Global" },
     @{Range = "54.37.0.0"; Mask = "255.255.0.0"; CIDR = "/16"; Name = "OVH Cloud" },
-    @{Range = "51.68.0.0"; Mask = "255.252.0.0"; CIDR = "/14"; Name = "OVH Cloud 2" }
+    @{Range = "51.68.0.0"; Mask = "255.252.0.0"; CIDR = "/14"; Name = "OVH Cloud 2" },
+    @{Range = "51.75.0.0"; Mask = "255.255.0.0"; CIDR = "/16"; Name = "OVH Cloud 3" },
+    @{Range = "51.77.0.0"; Mask = "255.255.0.0"; CIDR = "/16"; Name = "OVH Cloud 4" },
+    @{Range = "51.79.0.0"; Mask = "255.255.0.0"; CIDR = "/16"; Name = "OVH Cloud 5" },
+    @{Range = "51.83.0.0"; Mask = "255.255.0.0"; CIDR = "/16"; Name = "OVH Cloud 6" },
+    @{Range = "135.125.0.0"; Mask = "255.255.0.0"; CIDR = "/16"; Name = "OVH Paris 2" },
+    @{Range = "141.94.0.0"; Mask = "255.254.0.0"; CIDR = "/15"; Name = "OVH Paris 3" },
+    @{Range = "141.95.0.0"; Mask = "255.255.0.0"; CIDR = "/16"; Name = "OVH Paris 4" },
+    @{Range = "146.59.0.0"; Mask = "255.255.0.0"; CIDR = "/16"; Name = "OVH Roubaix" },
+    @{Range = "147.135.0.0"; Mask = "255.255.0.0"; CIDR = "/16"; Name = "OVH Gravelines" },
+    @{Range = "151.80.0.0"; Mask = "255.248.0.0"; CIDR = "/13"; Name = "OVH France Large" },
+    @{Range = "178.32.0.0"; Mask = "255.248.0.0"; CIDR = "/13"; Name = "OVH France 2" },
+    @{Range = "188.165.0.0"; Mask = "255.255.0.0"; CIDR = "/16"; Name = "OVH Strasbourg" },
+    
+    # Scaleway Paris/France
+    @{Range = "51.15.0.0"; Mask = "255.255.0.0"; CIDR = "/16"; Name = "Scaleway Paris" },
+    @{Range = "51.158.0.0"; Mask = "255.254.0.0"; CIDR = "/15"; Name = "Scaleway Paris 2" },
+    @{Range = "163.172.0.0"; Mask = "255.255.0.0"; CIDR = "/16"; Name = "Scaleway Paris 3" },
+    @{Range = "212.47.224.0"; Mask = "255.255.224.0"; CIDR = "/19"; Name = "Scaleway Paris 4" },
+    @{Range = "62.210.0.0"; Mask = "255.255.0.0"; CIDR = "/16"; Name = "Scaleway DC2" },
+    @{Range = "195.154.0.0"; Mask = "255.255.0.0"; CIDR = "/16"; Name = "Scaleway DC3" },
+    
+    # Online.net (Iliad/Free)
+    @{Range = "212.129.0.0"; Mask = "255.255.192.0"; CIDR = "/18"; Name = "Online.net Paris" },
+    @{Range = "62.210.0.0"; Mask = "255.255.0.0"; CIDR = "/16"; Name = "Online.net DC1" },
+    @{Range = "163.172.0.0"; Mask = "255.255.0.0"; CIDR = "/16"; Name = "Online.net DC2" },
+    
+    # ═══════════════════════════════════════════════════════════════
+    # SHADOW DATACENTERS - PAYS-BAS (AMSTERDAM)
+    # ═══════════════════════════════════════════════════════════════
+    
+    @{Range = "185.15.244.0"; Mask = "255.255.252.0"; CIDR = "/22"; Name = "Amsterdam DC1" },
+    @{Range = "185.102.136.0"; Mask = "255.255.252.0"; CIDR = "/22"; Name = "Amsterdam DC2" },
+    @{Range = "185.246.208.0"; Mask = "255.255.240.0"; CIDR = "/20"; Name = "Amsterdam DC3" },
+    @{Range = "51.15.0.0"; Mask = "255.255.0.0"; CIDR = "/16"; Name = "Scaleway Amsterdam" },
+    
+    # ═══════════════════════════════════════════════════════════════
+    # SHADOW DATACENTERS - ALLEMAGNE (FRANCFORT)
+    # ═══════════════════════════════════════════════════════════════
+    
+    @{Range = "51.75.0.0"; Mask = "255.255.0.0"; CIDR = "/16"; Name = "OVH Frankfurt" },
+    @{Range = "54.38.0.0"; Mask = "255.254.0.0"; CIDR = "/15"; Name = "OVH Frankfurt 2" },
+    @{Range = "135.125.0.0"; Mask = "255.255.0.0"; CIDR = "/16"; Name = "Frankfurt DC" },
+    
+    # ═══════════════════════════════════════════════════════════════
+    # SHADOW DATACENTERS - ROYAUME-UNI (LONDRES)
+    # ═══════════════════════════════════════════════════════════════
+    
+    @{Range = "51.38.0.0"; Mask = "255.254.0.0"; CIDR = "/15"; Name = "OVH London" },
+    @{Range = "51.77.0.0"; Mask = "255.255.0.0"; CIDR = "/16"; Name = "OVH London 2" },
+    @{Range = "51.89.0.0"; Mask = "255.255.0.0"; CIDR = "/16"; Name = "OVH London 3" },
+    
+    # ═══════════════════════════════════════════════════════════════
+    # PLAGES ADDITIONNELLES (Autres providers utilisés par Shadow)
+    # ═══════════════════════════════════════════════════════════════
+    
+    @{Range = "5.196.0.0"; Mask = "255.252.0.0"; CIDR = "/14"; Name = "OVH Legacy" },
+    @{Range = "91.121.0.0"; Mask = "255.255.0.0"; CIDR = "/16"; Name = "OVH Legacy 2" },
+    @{Range = "94.23.0.0"; Mask = "255.255.0.0"; CIDR = "/16"; Name = "OVH Legacy 3" },
+    @{Range = "149.202.0.0"; Mask = "255.254.0.0"; CIDR = "/15"; Name = "OVH Public Cloud" },
+    @{Range = "51.210.0.0"; Mask = "255.254.0.0"; CIDR = "/15"; Name = "OVH Public Cloud 2" }
 )
 
 $successCount = 0
