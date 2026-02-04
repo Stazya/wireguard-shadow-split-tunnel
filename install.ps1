@@ -120,6 +120,12 @@ $scriptsToUpdate = @{
         "OldGuardianPath" = 'C:\\Users\\atomi\\Downloads\\shadow_guardian.ps1'
         "NewGuardianPath" = (Join-Path $InstallPath "shadow_guardian.ps1")
     }
+    "ShadowVPN_Premium.ps1"            = @{
+        "OldGuardianPath"   = 'C:\\Users\\atomi\\Downloads\\shadow_guardian.ps1'
+        "NewGuardianPath"   = (Join-Path $InstallPath "shadow_guardian.ps1")
+        "OldDiagnosticPath" = 'C:\\Users\\atomi\\Downloads\\diagnostic_complet.ps1'
+        "NewDiagnosticPath" = (Join-Path $InstallPath "diagnostic_complet.ps1")
+    }
     "diagnostic_complet.ps1"           = @{
         "OldLogPath" = 'C:\\Users\\atomi\\Downloads\\wireguard_routing.log'
         "NewLogPath" = (Join-Path $InstallPath "wireguard_routing.log")
@@ -159,7 +165,17 @@ foreach ($scriptName in $scriptsToUpdate.Keys) {
     # Mettre à jour le chemin du guardian si présent
     if ($paths.ContainsKey("OldGuardianPath")) {
         $oldPath = $paths["OldGuardianPath"]
-        $newPath = $paths["NewGuardianPath"] -replace '\\', '\\'
+        $newPath = $paths["NewGuardianPath"] -replace '\\', '\\\\'
+        if ($scriptContent -match [regex]::Escape($oldPath)) {
+            $scriptContent = $scriptContent -replace [regex]::Escape($oldPath), $newPath
+            $updated = $true
+        }
+    }
+    
+    # Mettre à jour le chemin du diagnostic si présent
+    if ($paths.ContainsKey("OldDiagnosticPath")) {
+        $oldPath = $paths["OldDiagnosticPath"]
+        $newPath = $paths["NewDiagnosticPath"] -replace '\\', '\\\\'
         if ($scriptContent -match [regex]::Escape($oldPath)) {
             $scriptContent = $scriptContent -replace [regex]::Escape($oldPath), $newPath
             $updated = $true
@@ -212,7 +228,22 @@ Write-Host "[5/6] Création des raccourcis..." -ForegroundColor Yellow
 
 $desktopPath = [Environment]::GetFolderPath("Desktop")
 
-# Créer un raccourci pour le lanceur
+# Créer un raccourci pour l'interface Premium
+$premiumBat = Join-Path $InstallPath "ShadowVPN_Premium.bat"
+if (Test-Path $premiumBat) {
+    $premiumShortcut = Join-Path $desktopPath "✨ Shadow VPN Premium.lnk"
+    
+    $WScriptShell = New-Object -ComObject WScript.Shell
+    $shortcut = $WScriptShell.CreateShortcut($premiumShortcut)
+    $shortcut.TargetPath = $premiumBat
+    $shortcut.WorkingDirectory = $InstallPath
+    $shortcut.Description = "Interface graphique Premium - Shadow VPN Guardian"
+    $shortcut.Save()
+    
+    Write-Log "✅ Raccourci créé : $premiumShortcut" "SUCCESS"
+}
+
+# Créer un raccourci pour le lanceur CLI
 $launcherScript = Join-Path $InstallPath "lancer_wireguard_protege.ps1"
 $launcherShortcut = Join-Path $desktopPath "🛡️ WireGuard Protégé.lnk"
 
