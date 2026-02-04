@@ -70,11 +70,32 @@ wireguard-shadow-split-tunnel/
 
 ### Étapes
 
+#### Méthode 1 : Installation Automatique (Recommandé) 🚀
+
+```powershell
+# Clonez le dépôt
+git clone https://github.com/Stazya/wireguard-shadow-split-tunnel.git
+cd wireguard-shadow-split-tunnel
+
+# Lancez le script d'installation automatique
+.\install.ps1
+```
+
+Le script va automatiquement :
+
+- ✅ Détecter le répertoire d'installation
+- ✅ Mettre à jour tous les chemins de fichiers
+- ✅ Configurer la politique d'exécution PowerShell
+- ✅ Créer des raccourcis sur le bureau
+- ✅ Générer un résumé d'installation
+
+#### Méthode 2 : Installation Manuelle
+
 #### 1. Télécharger le projet
 
 ```powershell
 # Clonez le dépôt
-git clone https://github.com/VOTRE_USERNAME/wireguard-shadow-split-tunnel.git
+git clone https://github.com/Stazya/wireguard-shadow-split-tunnel.git
 cd wireguard-shadow-split-tunnel
 ```
 
@@ -88,12 +109,14 @@ Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope LocalMachine
 #### 3. Configurer le template WireGuard
 
 Éditez `config_wireguard_template.conf` et remplacez :
+
 - `PrivateKey` : Votre clé privée WireGuard
 - `Address` : Votre adresse IP dans le tunnel
 - `PublicKey` : La clé publique de votre serveur WireGuard
 - `Endpoint` : L'IP et le port de votre serveur WireGuard
 
 **Important** : Mettez à jour les chemins des scripts dans la configuration :
+
 ```ini
 PostUp = powershell -ExecutionPolicy Bypass -File "C:\CHEMIN\VERS\wireguard_postup.ps1"
 PreDown = powershell -ExecutionPolicy Bypass -File "C:\CHEMIN\VERS\wireguard_predown.ps1"
